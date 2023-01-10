@@ -1,10 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Обновить информацию о продукте</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-grid.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-reboot.css}" rel="stylesheet">
+    <link th:href="@{/js/bootstrap.bundle.js}" rel="stylesheet">
+    <link th:href="@{/js/bootstrap.js}" rel="stylesheet">
 </head>
 <body>
-$END$
+
+<div th:insert="~{navigationBar :: nav}"></div>
+
+<div class="container">
+
+    <h3 class="display-5" th:text="${product.name}"></h3>
+    <!--/*@thymesVar id="newProduct" type="com.example.infsystem.models.Product"*/-->
+    <form th:method="POST" th:action="@{/product/{id}/update(id=${product.idProduct})}" th:object="${newProduct}">
+        <div class="row">
+            <div class="col-4">
+                Единицы измерения
+            </div>
+            <div class="col-4 border-left">
+                <select th:field="*{unitMeasurement.idUnit}" id="state" class="custom-select d-block w-100"
+                        aria-label="Default select example">
+                    <!--                    <option value="" selected>Выбор</option>-->
+                    <option th:each="typeMeasure : ${typeMeasures}"
+                            th:value="${typeMeasure.idUnit}"
+                            th:text="${typeMeasure.name}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                Тип продукта
+            </div>
+            <div class="col-4 border-left">
+                <select th:field="*{typeProduct.idTypeProduct}" id="stateOne" class="custom-select d-block w-100"
+                        aria-label="Default select example">
+                    <!--                    <option disabled selected>Выбор</option>-->
+                    <!--/*@thymesVar id="typeProducts" type="TypeProduct"*/-->
+                    <option th:each="typeProducti : ${typeProducts}"
+                            th:value="${typeProducti.idTypeProduct}"
+                            th:text="${typeProducti.name}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                Количество на складе
+            </div>
+            <div class="col-4 border-left">
+                <input th:field="*{quantityWarehouse}" class="form-control" type="number"
+                       th:value="${product.quantityWarehouse}" required min="0">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                Себестоимость
+            </div>
+            <div class="col-4 border-left">
+                <input th:field="*{cost}" class="form-control" type="number" th:value="${product.cost}" required min="0"
+                       max="10000">
+            </div>
+        </div>
+
+        <div class="row">
+            <button class="btn btn-primary btn-block" type="submit">Сохранить продукт</button>
+        </div>
+    </form>
+</div>
 </body>
 </html>

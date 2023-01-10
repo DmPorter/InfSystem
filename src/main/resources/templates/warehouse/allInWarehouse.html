@@ -17,15 +17,16 @@
             <tr>
                 <th scope="col">Артикул</th>
                 <th scope="col">Название</th>
-
                 <th scope="col">Количество</th>
+                <th scope="col">Себестоимость</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="product : ${products}">
                 <th scope="row" th:text="${product.idProduct}">ID</th>
-                <td> <a class="stretched-link" th:href="@{/warehouse/product/{id}(id=${product.idProduct})}" th:text="${product.name}" ></a></td>
+                <td> <a class="stretched-link" th:href="@{/product/{id}(id=${product.idProduct})}" th:text="${product.name}" ></a></td>
                 <td th:text="${product.quantityWarehouse + ' ' + product.unitMeasurement.getName()}">Quantity</td>
+                <td th:text="${product.cost} + ' руб'">Cost</td>
             </tr>
             </tbody>
         </table>

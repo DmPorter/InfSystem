@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Новый рецепт</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-grid.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-reboot.css}" rel="stylesheet">
+    <link th:href="@{/js/bootstrap.bundle.js}" rel="stylesheet">
+    <link th:href="@{/js/bootstrap.js}" rel="stylesheet">
 </head>
 <body>
-$END$
+<div th:insert="~{navigationBar :: nav}"></div>
+
+<div class="py-5 text-center">
+    <h2>Добавление нового продукта</h2>
+</div>
+<div class="container">
+    <!--/*@thymesVar id="recipe" type="com.example.infsystem.models.Recipe"*/-->
+    <form th:method="POST" th:action="@{/recipe/new-recipe/}" th:object="${recipe}">
+        <div class="mb-3">
+            <label for="name">Введите название рецепта</label>
+            <input th:field="*{name}" type="text" id="name" class="form-control" placeholder="Название рецепта" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id">Количество ингредиентов</label>
+            <input th:field="*{idRecipe}" type="number" id="id" class="form-control" placeholder="Количество" required min="1">
+        </div>
+
+        <div class="mb-3">
+            <label for="cost">Стоимость</label>
+            <input th:field="*{cost}" type="number" id="cost" class="form-control" placeholder="Стоимость" required min="0">
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Продолжить</button>
+    </form>
+
+</div>
 </body>
 </html>

@@ -14,6 +14,8 @@
 </head>
 <body>
 
+<div th:insert="~{navigationBar :: nav}"></div>
+
 <div class="py-5 text-center">
     <h2>Добавление нового продукта</h2>
 </div>
@@ -22,7 +24,12 @@
     <form th:method="POST" th:action="@{/warehouse/new}" th:object="${product}">
         <div class="mb-3">
             <label for="name">Введите название продукта</label>
-            <input th:field="*{name}" type="text" id="name" class="form-control" placeholder="Название продукта">
+            <input th:field="*{name}" type="text" id="name" class="form-control" placeholder="Название продукта" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="cost">Введите себестоимость продукта</label>
+            <input th:field="*{cost}" type="text" id="cost" class="form-control" placeholder="Название продукта" required min="0.0">
         </div>
 
         <div class="row">

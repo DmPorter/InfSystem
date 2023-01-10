@@ -1,10 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Новый продукт</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-grid.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-reboot.css}" rel="stylesheet">
+    <link th:href="@{/js/bootstrap.bundle.js}" rel="stylesheet">
+    <link th:href="@{/js/bootstrap.js}" rel="stylesheet">
+
+    <link rel="stylesheet" href="/select2/dist/css/select2.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+            integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
+          integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous"/>
 </head>
 <body>
-$END$
+
+<div class="container">
+
+    <form th:method="POST" th:action="@{/recipe/new}">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group form">
+                    <select class="mul-select" multiple="true">
+                        <option name="1" value="Stack">Stack</option>
+                        <option name="2" value="Queue">Queue</option>
+                        <option name="3" value="Linked-List">Linked-List</option>
+                        <option name="4" value="Heap">Heap</option>
+                        <option name="5" value="Binary-Tree">Binary-Tree</option>
+                        <option name="6" value="Graph">Graph</option>
+                        <option name="7" value="Array">Array</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Сохранить продукт</button>
+    </form>
+
+    <table id="tab" class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Ингредиент</th>
+            <th scope="col">Количество</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row" th:text="${i}">1</th>
+            <td>
+                <label for="select-state"></label>
+                <select id="select-state" class="form-select form-select-sm" placeholder="Pick a state...">
+                    <option value="">Select a state...</option>
+                    <option th:each="product : ${products} "
+                            th:value="${product.idProduct}"
+                            th:text="${product.name}"></option>
+                </select></td>
+            <td>Otto</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <input type='button' value='Ещё' onClick='add();'>
+
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('select').selectize({
+            sortField: 'text'
+        });
+    });
+</script>
+
+<script th:inline="javascript">
+    function add() {
+        var row = document.createElement("tr");
+        var value = [[${products}]]
+        row.innerHTML = "<th scope=\"row\">1</th>\n" +
+            "            <td>\n" +
+            "                <label for=\"select-state\"></label>\n" +
+            "                <select id=\"select-state\" class=\"form-select form-select-sm\" placeholder=\"Pick a state...\">\n" +
+            "                    <option value=\"\">Select a state...</option>\n" +
+            "                    <option th:each=\"product : ${products} \"\n" +
+            "                            th:value=\"${product.idProduct}\"\n" +
+            "                            th:text=\"${product.name}\"></option>\n" +
+            "                </select></td>\n" +
+            "            <td>" + value[0].toString() + "</td>";
+        document.getElementById("tab").appendChild(row);
+    }
+</script>
+
+
 </body>
 </html>

@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
-$END$
+
+<div th:insert="~{navigationBar :: nav}"></div>
+
+<div class="container">
+    <h3 class="display-4">Рецепты</h3>
+    <div class="row">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">Номер</th>
+                <th scope="col">Название</th>
+                <th scope="col">Стоимость для клиента</th>
+                <th scope="col">В наличии</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="recipe : ${recipes}">
+                <th scope="row" th:text="${recipe.key.idRecipe}">ID</th>
+                <td> <a class="stretched-link" th:href="@{/recipe/{id}(id=${recipe.key.idRecipe})}" th:text="${recipe.key.name}" ></a></td>
+                <td th:text="${recipe.key.cost + ' руб'}">Quantity</td>
+                <td th:text="${recipe.value}">0</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
 </body>
 </html>

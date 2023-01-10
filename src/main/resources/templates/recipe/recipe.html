@@ -1,10 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Информация о рецепте</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-grid.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-reboot.css}" rel="stylesheet">
+    <link th:href="@{/js/bootstrap.bundle.js}" rel="stylesheet">
+    <link th:href="@{/js/bootstrap.js}" rel="stylesheet">
 </head>
 <body>
-$END$
+<div th:insert="~{navigationBar :: nav}"></div>
+
+<div class="container text-left">
+    <h2 class="display-4">Информация о рецепте</h2>
+    <!--/*@thymesVar id="recipe" type="com.example.infsystem.models.Recipe"*/-->
+    <h3 class="display-5" th:text="${recipe.name}"></h3>
+    <div class="row">
+        <div class="col">
+            Стоимость
+        </div>
+        <div class="col-10">
+            <p th:text="${recipe.cost}"></p>
+        </div>
+    </div>
+    <h3 class="display-5">Ингредиенты</h3>
+    <div class="row">
+
+    </div>
+    <table class="table table-striped" width="30%">
+        <thead>
+        <tr>
+            <th scope="col">Продукт</th>
+            <th scope="col">Количество</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ingr : ${recipe.getIngredients()}">
+                <th scope="col" th:text="${ingr.getProduct().name}">#</th>
+                <th scope="col" th:text="${ingr.quantity}">First</th>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="button" class="btn btn-light btn-lg"><a class="link-light" th:href="@{/recipe/{id}/delete(id=${recipe.getIdRecipe()})}">Удалить</a></button>
+</div>
 </body>
 </html>

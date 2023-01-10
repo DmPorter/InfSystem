@@ -10,31 +10,39 @@ public class Ingredient {
     @Column(name = "id_record")
     private long idRecord;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "id_recipe")
-    private TypeRecipe idType;
+    private Recipe recipe;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     private Product product;
 
     @Column(name = "quantity")
-    private int quantity;
+    private double quantity;
 
 
     public Ingredient() {
     }
 
-    public Ingredient(TypeRecipe idType, int quantity, Product product) {
-        this.idType = idType;
-        this.quantity = quantity;
+    public Ingredient(Recipe recipe, Product product, int quantity) {
+        this.recipe = recipe;
         this.product = product;
+        this.quantity = quantity;
     }
 
-    public Ingredient(long idRecord, TypeRecipe idType, int quantity, Product product) {
+    public Ingredient(long idRecord, Recipe recipe, Product product, int quantity) {
         this.idRecord = idRecord;
-        this.idType = idType;
-        this.quantity = quantity;
+        this.recipe = recipe;
         this.product = product;
+        this.quantity = quantity;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 
     public long getIdRecord() {
@@ -45,19 +53,11 @@ public class Ingredient {
         this.idRecord = idRecord;
     }
 
-    public TypeRecipe getIdType() {
-        return idType;
-    }
-
-    public void setIdType(TypeRecipe typeRecipe) {
-        this.idType = typeRecipe;
-    }
-
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
@@ -69,13 +69,4 @@ public class Ingredient {
         this.product = product;
     }
 
-    @Override
-    public String toString() {
-        return "Ingredient{" +
-                "idRecord=" + idRecord +
-                ", typeRecipe=" + idType.getIdType() +
-                ", product=" + product.getIdProduct() +
-                ", quantity=" + quantity +
-                '}';
-    }
 }
