@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Новый продукт</title>
+
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-grid.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-reboot.css}" rel="stylesheet">
+    <link th:href="@{/js/bootstrap.bundle.js}" rel="stylesheet">
+    <link th:href="@{/js/bootstrap.js}" rel="stylesheet">
+</head>
+<body>
+
+<div class="py-5 text-center">
+    <h2>Добавление нового продукта</h2>
+</div>
+<div class="container">
+    <!--/*@thymesVar id="product" type="com.example.infsystem.models.Product"*/-->
+    <form th:method="POST" th:action="@{/warehouse/new}" th:object="${product}">
+        <div class="mb-3">
+            <label for="name">Введите название продукта</label>
+            <input th:field="*{name}" type="text" id="name" class="form-control" placeholder="Название продукта">
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="stateOne">Выберите тип продукта</label>
+                <select th:field="*{typeProduct.idTypeProduct}" id="stateOne" class="custom-select d-block w-100" aria-label="Default select example">
+<!--                    <option disabled selected>Выбор</option>-->
+                    <!--/*@thymesVar id="typeProducts" type="TypeProduct"*/-->
+                    <option th:each="typeProducti : ${typeProducts}"
+                            th:value="${typeProducti.idTypeProduct}"
+                            th:text="${typeProducti.name}"></option>
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="state">Выберите единицу измерения</label>
+                <select th:field="*{unitMeasurement.idUnit}" id="state" class="custom-select d-block w-100" aria-label="Default select example">
+<!--                    <option value="" selected>Выбор</option>-->
+                    <option th:each="typeMeasure : ${typeMeasures}"
+                            th:value="${typeMeasure.idUnit}"
+                            th:text="${typeMeasure.name}"></option>
+                </select>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Сохранить продукт</button>
+    </form>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>

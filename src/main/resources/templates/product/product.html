@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о продукте</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-grid.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap-reboot.css}" rel="stylesheet">
+    <link th:href="@{/js/bootstrap.bundle.js}" rel="stylesheet">
+    <link th:href="@{/js/bootstrap.js}" rel="stylesheet">
+</head>
+<body>
+<div th:insert="~{navigationBar :: nav}"></div>
+
+
+<div class="container text-left">
+    <h2 class="display-4">Информация о продукте</h2>
+    <!--/*@thymesVar id="product" type="com.example.infsystem.models.Product"*/-->
+    <h3 class="display-5" th:text="${product.name}"></h3>
+    <div class="row">
+        <div class="col">
+            Единицы измерения
+        </div>
+        <div class="col-10">
+            <p th:text="${product.getUnitMeasurement().name}"></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            Тип продукта
+        </div>
+        <div class="col-10">
+            <p th:text="${product.getTypeProduct().name}"></p>
+        </div>
+    </div>
+
+    <div class = "row">
+        <div class="col">
+            Себестоимость продукта
+        </div>
+        <div class="col-10">
+            <p th:text="${product.getCost()}"></p>
+        </div>
+    </div>
+    <button type="button" class="btn btn-light btn-lg"><a class="link-light" th:href="@{/product/{id}/update(id=${product.idProduct})}">Изменить</a></button>
+    <button type="button" class="btn btn-light btn-lg"><a class="link-light" th:href="@{/warehouse/product/{id}/delete(id=${product.idProduct})}">Удалить</a></button>
+</div>
+
+</body>
+</html>

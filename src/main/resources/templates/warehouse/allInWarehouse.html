@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Склад</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div th:insert="~{navigationBar :: nav}"></div>
+
+<div class="container">
+    <h3 class="display-4">Наличие товара на складе</h3>
+    <div class="row">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">Артикул</th>
+                <th scope="col">Название</th>
+
+                <th scope="col">Количество</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <th scope="row" th:text="${product.idProduct}">ID</th>
+                <td> <a class="stretched-link" th:href="@{/warehouse/product/{id}(id=${product.idProduct})}" th:text="${product.name}" ></a></td>
+                <td th:text="${product.quantityWarehouse + ' ' + product.unitMeasurement.getName()}">Quantity</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+
+</html>

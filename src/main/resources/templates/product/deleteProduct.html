@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Удаление</title>
+</head>
+<body>
+  <h2 class = "lead" th:text="'Продукт с id ' +${id} + ' успешно удален'"></h2>
+
+<script>
+  setTimeout(function time(){
+    window.location.href = '/warehouse/all';
+  }, 1000);
+</script>
+</body>
+</html>
