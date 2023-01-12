@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказ</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="~{navigationBar :: nav}"></div>
+
+<div th:if="${list.size() == 0}">
+    <h3 class="display-4">Заказ пуст</h3>
+</div>
+<!--/*@thymesVar id="list" type="java.util.ArrayList"*/-->
+<div th:if="${list.size() > 0}" class="container">
+    <h3 class="display-4">Заказ</h3>
+    <div class="row">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Позиция</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Стоимость</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--/*@thymesVar id="list" type="java.util.ArrayList"*/-->
+            <tr th:each="value, state : ${list}">
+                <th th:text="${state.index + 1}">#</th>
+                <td th:text="${value.recipe.name}">Name</td>
+                <td th:text="${value.quantity}">Quantity</td>
+                <td th:text="${value.quantity * value.recipe.cost}">0</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col">
+            Сумма заказа
+        </div>
+        <div class="col-10">
+            <p th:text="${sum}"></p>
+        </div>
+    </div>
+    <button type="button" class="btn btn-light btn-lg"><a class="link-light" th:href="@{/order/neworder}">Сделать заказ</a></button>
+</div>
+</body>
+</html>

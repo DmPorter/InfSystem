@@ -3,6 +3,7 @@ package com.example.infsystem.models;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "product")
@@ -101,6 +102,19 @@ public class Product {
 
     public void setTypeProduct(TypeProduct typeProduct) {
         this.typeProduct = typeProduct;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return idProduct == product.idProduct;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idProduct);
     }
 
     @Override

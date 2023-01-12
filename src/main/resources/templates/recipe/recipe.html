@@ -23,7 +23,14 @@
             Стоимость
         </div>
         <div class="col-10">
-            <p th:text="${recipe.cost}"></p>
+            <p th:text="${recipe.cost + ' руб'}"></p>
+        </div>
+
+        <div class="col">
+            Себестоимость
+        </div>
+        <div class="col-10">
+            <p th:text="${costPrice} + ' руб'"></p>
         </div>
     </div>
     <h3 class="display-5">Ингредиенты</h3>
@@ -40,7 +47,7 @@
         <tbody>
             <tr th:each="ingr : ${recipe.getIngredients()}">
                 <th scope="col" th:text="${ingr.getProduct().name}">#</th>
-                <th scope="col" th:text="${ingr.quantity}">First</th>
+                <th scope="col" th:text="${ingr.quantity + ' ' +  ingr.product.unitMeasurement.name}">First</th>
             </tr>
         </tbody>
     </table>

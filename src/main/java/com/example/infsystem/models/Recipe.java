@@ -2,10 +2,11 @@ package com.example.infsystem.models;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Recipe")
-public class Recipe {
+public class Recipe implements Comparable<Recipe>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,6 +100,21 @@ public class Recipe {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Recipe recipe = (Recipe) o;
+        return idRecipe == recipe.idRecipe && Double.compare(recipe.cost, cost) == 0 && Objects.equals(name, recipe.name) && Objects.equals(typeRecipe, recipe.typeRecipe) && Objects.equals(ingredients, recipe.ingredients);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(idRecipe, name, cost, typeRecipe, ingredients);
+    }
 
+    @Override
+    public int compareTo(Recipe o) {
+        return Long.compare(this.idRecipe , o.getIdRecipe());
+    }
 }

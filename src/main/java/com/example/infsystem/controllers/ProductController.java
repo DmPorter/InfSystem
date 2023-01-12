@@ -25,9 +25,13 @@ public class ProductController {
 
     @GetMapping("/{id}/delete")
     public String deleteProductById(@PathVariable String id, Model model) {
-        warehouseService.deleteProductById(Long.parseLong(id));
-        model.addAttribute("id", id);
-        return "product/deleteProduct";
+        try {
+            warehouseService.deleteProductById(Long.parseLong(id));
+            model.addAttribute("id", id);
+            return "product/deleteProduct";
+        }catch (Exception e){
+            return "product/excDeleteProduct";
+        }
     }
 
     @GetMapping("/{id}/update")

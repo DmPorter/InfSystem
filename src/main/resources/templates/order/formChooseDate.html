@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Выбор даты составления отчета</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="~{navigationBar :: nav}"></div>
+
+<h3 class="display-4">Выберите период предоставления отчета</h3>
+
+<div class="container">
+    <!--/*@thymesVar id="report" type="com.example.infsystem.forms.DateForm"*/-->
+    <form th:action="@{/order/report}" method="post" th:object="${report}">
+        <div>
+            <label for="begin">Дата начала отчета</label>
+            <input type="date" th:field="*{begin}" id="begin"/>
+        </div>
+
+        <div>
+            <label for="end">Дата окончания отчета</label>
+            <input type="date" th:field="*{end}" id="end"/>
+        </div>
+        <div>
+            <button type="submit" class="button">Выбрать</button>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

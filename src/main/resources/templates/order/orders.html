@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказы</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="~{navigationBar :: nav}"></div>
+
+
+<div class="container">
+    <h3 class="display-4">Отчет по заказам</h3>
+    <div class="row">
+        <div class="col">
+            Период отчета
+        </div>
+        <div class="col-10">
+            <p th:text="${per}"></p>
+        </div>
+    </div>
+    <div th:if="${list.size() == 0}">
+        <h3 class="display-4">В этот период заказов не найдено</h3>
+    </div>
+    <div th:if="${list.size() > 0}" class="row">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">Номер заказа</th>
+                <th scope="col">Дата заказа</th>
+                <th scope="col">Время заказа</th>
+                <th scope="col">Сумма заказа</th>
+                <th scope="col">Себестоимость</th>
+                <th scope="col">Прибыль</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${list}">
+                <!--/*@thymesVar id="order" type="com.example.infsystem.helper.OrderForReport"*/-->
+                <th th:text="${order.idOrder}">#</th>
+                <td th:text="${order.date.getDate() + '.' + (order.date.getMonth() + 1) + '.'+ (order.date.getYear() + 1900)}">Name</td>
+                <td th:text="${order.date.getHours() + ':' + order.date.getMinutes()}"></td>
+                <td th:text="${order.sum}"></td>
+                <td th:text="${order.costPrice}"></td>
+                <td th:text="${order.sum - order.costPrice}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col">
+            Сумма всех заказов
+        </div>
+        <div class="col-10">
+            <p th:text="${sum}"></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            Прибыль
+        </div>
+        <div class="col-10">
+            <p th:text="${costPrice}"></p>
+        </div>
+    </div>
+    <button type="button" class="btn btn-light btn-lg"><a class="link-light" th:href="@{/order/neworder}">Сделать заказ</a></button>
+</div>
+</body>
+</html>

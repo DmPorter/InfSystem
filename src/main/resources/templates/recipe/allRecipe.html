@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Рецепты</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
@@ -27,6 +27,8 @@
                 <td> <a class="stretched-link" th:href="@{/recipe/{id}(id=${recipe.key.idRecipe})}" th:text="${recipe.key.name}" ></a></td>
                 <td th:text="${recipe.key.cost + ' руб'}">Quantity</td>
                 <td th:text="${recipe.value}">0</td>
+                <td th:if="${recipe.value > 0}"><a th:href="@{/order/add/{id}(id=${recipe.key.idRecipe})}" class="button">Добавить в заказ</a></td>
+                <td th:if="${recipe.value == 0}">Нет в наличии</td>
             </tr>
             </tbody>
         </table>

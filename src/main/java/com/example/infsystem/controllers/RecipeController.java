@@ -1,5 +1,6 @@
 package com.example.infsystem.controllers;
 
+import com.example.infsystem.helper.CostPrice;
 import com.example.infsystem.helper.ProductsCreationDto;
 import com.example.infsystem.helper.QuantityRecipesInWarehouse;
 import com.example.infsystem.models.Ingredient;
@@ -12,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -66,6 +69,7 @@ public class RecipeController {
     @GetMapping("/{id}")
     public String recipeById(@PathVariable long id, Model model){
         model.addAttribute("recipe", recipeService.getRecipeById(id));
+        model.addAttribute("costPrice", CostPrice.getCostPrice(recipeService.getRecipeById(id).getIngredients()));
         return "/recipe/recipe";
     }
 
