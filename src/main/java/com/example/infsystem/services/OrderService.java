@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -66,6 +67,17 @@ public class OrderService {
         OrdersList.list = new ArrayList<>();
     }
 
+    public List<Order> getTodayOrders(){
+        Timestamp startDate = Timestamp.valueOf(LocalDateTime.now());
+        startDate.setHours(0);
+        startDate.setMinutes(0);
+        startDate.setSeconds(1);
+        Timestamp endDate = Timestamp.valueOf(LocalDateTime.now());
+        endDate.setHours(23);
+        endDate.setMinutes(59);
+        endDate.setSeconds(59);
+        return orderRepository.findByDateBetween(startDate, endDate);
+    }
     public List<Order> getAllOrders(){
         return orderRepository.findAll();
     }

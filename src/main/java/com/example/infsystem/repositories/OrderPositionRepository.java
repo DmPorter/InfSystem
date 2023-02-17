@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrderPositionRepository extends JpaRepository<OrderPosition, Long> {
+
 }

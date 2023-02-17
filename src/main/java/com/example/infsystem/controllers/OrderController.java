@@ -3,6 +3,7 @@ package com.example.infsystem.controllers;
 import com.example.infsystem.forms.DateForm;
 import com.example.infsystem.helper.OrderForReport;
 import com.example.infsystem.helper.OrdersList;
+import com.example.infsystem.helper.SumOrders;
 import com.example.infsystem.services.OrderService;
 import com.example.infsystem.services.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,14 +53,9 @@ public class OrderController {
         List<OrderForReport> list = OrderForReport.getOrders(orderService.getAllOrders());
         model.addAttribute("per", "Все время");
         model.addAttribute("list", list);
-        double sum = 0.0;
-        double costPrice = 0.0;
-        for(var val: list){
-            sum += val.getSum();
-            costPrice += val.getSum() - val.getCostPrice();
-        }
-        model.addAttribute("sum", sum);
-        model.addAttribute("costPrice", costPrice);
+
+        model.addAttribute("sum", SumOrders.getSum(list));
+        model.addAttribute("costPrice", SumOrders.getCostPrice(list));
 
         return "order/orders";
     }
@@ -81,16 +77,9 @@ public class OrderController {
     public String reportByDate(@RequestParam String from, @RequestParam String to, Model model){
         List<OrderForReport> list = OrderForReport.getOrders(orderService.getOrdersByDate(Timestamp.valueOf(from + " 0:0:01"), Timestamp.valueOf(to + " 23:59:59")));
         model.addAttribute("per", "с " + from + " по " + to);
-        double sum = 0.0;
-        double costPrice = 0.0;
-        for(var val: list){
-            sum += val.getSum();
-            costPrice += val.getSum() - val.getCostPrice();
-        }
-        model.addAttribute("sum", sum);
-        model.addAttribute("costPrice", costPrice);
 
-        System.out.println(from + " " + to);
+        model.addAttribute("sum", SumOrders.getSum(list));
+        model.addAttribute("costPrice", SumOrders.getCostPrice(list));
         model.addAttribute("list", list);
         return "order/orders";
     }

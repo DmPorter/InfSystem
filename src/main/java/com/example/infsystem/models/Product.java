@@ -30,6 +30,10 @@ public class Product {
     @JoinColumn(name = "id_unit_measure")
     private UnitMeasurement unitMeasurement;
 
+    @ManyToOne()
+    @JoinColumn(name = "id_provider")
+    private Provider provider;
+
     @Column(name = "cost_price")
     private double cost;
 
@@ -104,6 +108,14 @@ public class Product {
         this.typeProduct = typeProduct;
     }
 
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -117,6 +129,7 @@ public class Product {
         return Objects.hash(idProduct);
     }
 
+
     @Override
     public String toString() {
         return "Product{" +
@@ -125,6 +138,8 @@ public class Product {
                 ", quantityWarehouse=" + quantityWarehouse +
                 ", typeProduct=" + typeProduct +
                 ", unitMeasurement=" + unitMeasurement +
+                ", provider=" + provider +
+                ", cost=" + cost +
                 '}';
     }
 }
