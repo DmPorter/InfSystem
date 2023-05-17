@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавки</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+</head>
+<body>
+<div th:insert="~{navigationBar :: nav}"></div>
+
+<h3 class="display-4">Выберите добавки</h3>
+
+<div class="container">
+    <form th:action="@{/order/add/{id}/add-additives(id=${id})}" th:method="POST" th:object="${orderPosition}">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Добавка</th>
+                <th>Количество</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="additive, itemStat: *{orderPosition.list}">
+                <td th:text="${additive.additive.product.getName()}">
+                </td>
+                <td><input class="form-control" type="number" required min="0"
+                           th:field="*{orderPosition.list[__${itemStat.index}__].quantity}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="form-floating">
+            <label class="form-label" for="password">Введите комментарий</label>
+            <input class="form-control" type="text" th:field="*{comment}"  id="password" placeholder="Комментарий">
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Сохранить</button>
+    </form>
+
+</div>
+
+</body>
+</html>
