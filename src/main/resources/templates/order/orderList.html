@@ -4,6 +4,54 @@
     <meta charset="UTF-8">
     <title>Заказ</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <style>
+        .quantity_inner * {
+            box-sizing: border-box;
+        }
+
+        .quantity_inner {
+            display: flex;
+            justify-content: center;
+        }
+
+        .quantity_inner .bt_minus,
+        .quantity_inner .bt_plus,
+        .quantity_inner .quantity {
+            color: #BFE2FF;
+            height: 40px;
+            width: 40px;
+            padding: 0;
+            margin: 10px 2px;
+            border-radius: 10px;
+            border: 4px solid #BFE2FF;
+            background: #337AB7;
+            cursor: pointer;
+            outline: 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .quantity_inner .quantity {
+            width: 50px;
+            text-align: center;
+            font-size: 22px;
+            color: #FFF;
+            font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+        }
+
+        .quantity_inner .bt_minus svg,
+        .quantity_inner .bt_plus svg {
+            stroke: #BFE2FF;
+            stroke-width: 4;
+            transition: 0.5s;
+            margin: 4px;
+        }
+
+        .quantity_inner .bt_minus:hover svg,
+        .quantity_inner .bt_plus:hover svg {
+            stroke: #FFF;
+        }
+    </style>
 </head>
 <body>
 
@@ -21,17 +69,19 @@
             <tr>
                 <th scope="col">№</th>
                 <th scope="col">Позиция</th>
-                <th scope="col">Количество</th>
                 <th scope="col">Стоимость</th>
+                <th scope="col">Добавки</th>
+                <th scope="col">Комментарий</th>
             </tr>
             </thead>
             <tbody>
-            <!--/*@thymesVar id="list" type="java.util.ArrayList"*/-->
             <tr th:each="value, state : ${list}">
                 <th th:text="${state.index + 1}">#</th>
-                <td th:text="${value.recipe.name}">Name</td>
-                <td th:text="${value.quantity}">Quantity</td>
-                <td th:text="${value.quantity * value.recipe.cost}">0</td>
+                <td th:text="${value.getOrderPosition().recipe.name}">Name</td>
+                <td th:text="${value.getOrderPosition().quantity * value.getOrderPosition().recipe.cost + value.getOrderPosition().getCostAdditives()}">0</td>
+                <td th:text="${value.getOrderPosition().getAdditivesString()}"></td>
+                <td th:text="${value.getComment()}"></td>
+                <td> <a class="link-black" th:href="@{/order/delete/{id}(id = ${state.index})}">Удалить</a></td>
             </tr>
             </tbody>
         </table>

@@ -2,9 +2,11 @@ package com.example.infsystem.security;
 
 import com.example.infsystem.models.Person;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
 
 public class PersonDetails implements UserDetails {
@@ -17,7 +19,7 @@ public class PersonDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singletonList(new SimpleGrantedAuthority(person.getRole().getName()));
     }
 
     @Override
@@ -47,6 +49,7 @@ public class PersonDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        if(person.getRole().getName().equals("ROLE_NOTWORK")) return false;
+        else return true;
     }
 }

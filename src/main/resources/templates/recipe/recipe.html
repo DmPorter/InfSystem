@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Информация о рецепте</title>
@@ -52,7 +53,13 @@
         </tbody>
     </table>
 
-    <button type="button" class="btn btn-light btn-lg"><a class="link-light" th:href="@{/recipe/{id}/delete(id=${recipe.getIdRecipe()})}">Удалить</a></button>
+    <button
+            sec:authorize="hasRole('ROLE_ADMIN')"
+            type="button" class="btn btn-light btn-lg">
+        <a sec:authorize="hasRole('ROLE_ADMIN')"
+           class="link-light" th:href="@{/recipe/{id}/delete(id=${recipe.getIdRecipe()})}">
+            Удалить</a>
+    </button>
 </div>
 </body>
 </html>

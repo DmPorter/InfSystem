@@ -2,6 +2,7 @@ package com.example.infsystem.helper;
 
 import com.example.infsystem.models.Order;
 import com.example.infsystem.models.OrderPosition;
+import com.example.infsystem.models.Person;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ public class OrderForReport {
 
     private double costPrice = 0;
 
+    private Person person;
+
     public static List<OrderForReport> getOrders(List<Order> list){
         List<OrderForReport> orderForReportList = new ArrayList<>();
 
@@ -30,6 +33,8 @@ public class OrderForReport {
         this.idOrder = order.getIdOrder();
         this.date = order.getDate();
 
+        this.person = order.getPerson();
+
         countSumOrder(order.getOrderPositions());
 
         countCostPriceOrder(order.getOrderPositions());
@@ -37,14 +42,28 @@ public class OrderForReport {
 
     private void countSumOrder(List<OrderPosition> orderPositionList){
         for(OrderPosition val: orderPositionList){
-            sum += val.getQuantity() * val.getRecipe().getCost();
+            sum += val.getQuantity() * val.getRecipe().getCost() + val.getCostAdditives();
         }
     }
 
     private void countCostPriceOrder(List<OrderPosition> orderPositionList){
         for(OrderPosition val: orderPositionList){
             costPrice += CostPrice.getCostPrice(val.getRecipe().getIngredients());
+
+            for(var add: val.getList()){
+                costPrice += add.getQuantity() *
+                        add.getAdditive().getQuantity() *
+                        add.getAdditive().getProduct().getCost();
+            }
         }
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public long getIdOrder() {

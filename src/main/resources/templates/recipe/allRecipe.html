@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Рецепты</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
 </head>
 <body>
 
@@ -23,12 +24,12 @@
             </thead>
             <tbody>
             <tr th:each="recipe : ${recipes}">
-                <th scope="row" th:text="${recipe.key.idRecipe}">ID</th>
-                <td> <a class="stretched-link" th:href="@{/recipe/{id}(id=${recipe.key.idRecipe})}" th:text="${recipe.key.name}" ></a></td>
-                <td th:text="${recipe.key.cost + ' руб'}">Quantity</td>
-                <td th:text="${recipe.value}">0</td>
-                <td th:if="${recipe.value > 0}"><a th:href="@{/order/add/{id}(id=${recipe.key.idRecipe})}" class="button">Добавить в заказ</a></td>
-                <td th:if="${recipe.value == 0}">Нет в наличии</td>
+                <th scope="row" th:text="${recipe.getRecipe().getIdRecipe()}">ID</th>
+                <td> <a class="stretched-link" th:href="@{/recipe/{id}(id=${recipe.getRecipe().getIdRecipe()})}" th:text="${recipe.recipe.getName()}" ></a></td>
+                <td th:text="${recipe.getRecipe().getCost() + ' руб'}">Quantity</td>
+                <td th:text="${recipe.quantity}">0</td>
+                <td th:if="${recipe.quantity > 0}"><a th:href="@{/order/add/{id}(id=${recipe.getRecipe().getIdRecipe()})}" class="button">Добавить в заказ</a></td>
+                <td th:if="${recipe.quantity == 0}">Нет в наличии</td>
             </tr>
             </tbody>
         </table>

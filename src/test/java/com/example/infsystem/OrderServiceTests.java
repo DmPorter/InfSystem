@@ -1,5 +1,6 @@
 package com.example.infsystem;
 
+import com.example.infsystem.excel.CreateReportXls;
 import com.example.infsystem.models.Order;
 import com.example.infsystem.models.OrderPosition;
 import com.example.infsystem.models.Person;
@@ -48,6 +49,11 @@ public class OrderServiceTests {
     public void test1() {
         System.out.println(orderService.getTodayOrders());
     }
+    @Test
+    public void test2() {
+        CreateReportXls.createReportByDate(orderService.getOrdersByDate(Timestamp.valueOf("2023-03-01" + " 0:0:01"), Timestamp.valueOf("2023-03-02" + " 23:59:59")));
+    }
+
 
     @Test
     public void createUser(){

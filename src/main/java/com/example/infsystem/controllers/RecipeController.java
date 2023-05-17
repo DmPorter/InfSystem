@@ -6,16 +6,16 @@ import com.example.infsystem.helper.QuantityRecipesInWarehouse;
 import com.example.infsystem.models.Ingredient;
 import com.example.infsystem.models.Product;
 import com.example.infsystem.models.Recipe;
+import com.example.infsystem.security.PersonDetails;
 import com.example.infsystem.services.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/recipe")
@@ -61,8 +61,11 @@ public class RecipeController {
 
     @GetMapping("/all-recipe")
     public String allRecipe(Model model){
-        List<Recipe> list = recipeService.getAllRecipe().stream().filter((a) -> a.getIngredients() != null && a.getIngredients().size() != 0).toList();
-        model.addAttribute("recipes", QuantityRecipesInWarehouse.recipeDoubleMap(list));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PersonDetails personDetails = (PersonDetails) authentication.getPrincipal();
+
+        List<Recipe> list = recipeService.getAllRecipe();
+        model.addAttribute("recipes", QuantityRecipesInWarehouse.recipeDoubleMap(list, personDetails));
         return "/recipe/allRecipe";
     }
 

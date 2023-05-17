@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Продукты</title>
+    <title>Выбор даты предоставления отчета</title>
 
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 
@@ -114,7 +114,6 @@
             box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
         }
     </style>
-
     <style type="text/css">/* Chart.js */
     @keyframes chartjs-render-animation {
         from {
@@ -163,7 +162,6 @@
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/warehouse/all">Выход на главную</a>
 </header>
-
 <div class="container-fluid">
     <div class="row">
         <div th:insert="~{navAdmin :: navAdmin}"></div>
@@ -177,36 +175,31 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Все продукты</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group me-2">
-                        <a href="/warehouse/new-product" class="btn btn-sm btn-dark" tabindex="-1" role="button" aria-disabled="true">Новый продукт</a>
-                    </div>
+            <div class="my-4 w-100">
+                <div class="container">
+                    <h6 class="display-6">Выберите период предоставления отчета</h6>
+                    <form th:action="@{/admin/report-popularity}" method="post" th:object="${report}">
+                        <div>
+                            <label for="begin">Дата начала отчета</label>
+                            <input type="date" th:field="*{begin}" id="begin"/>
+                        </div>
+
+                        <div>
+                            <label for="end">Дата окончания отчета</label>
+                            <input type="date" th:field="*{end}" id="end"/>
+                        </div>
+                        <div>
+                            <button type="submit" class="button">Выбрать</button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead class="table-dark">
-                    <tr>
-                        <th scope="col">Артикул</th>
-                        <th scope="col">Название</th>
-                        <th scope="col">Количество</th>
-                        <th scope="col">Себестоимость</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="product : ${list}">
-                        <th scope="row" th:text="${product.idProduct}">ID</th>
-                        <td> <a class="link-secondary" th:href="@{/product/{id}(id=${product.idProduct})}" th:text="${product.name}" ></a></td>
-                        <td th:text="${product.quantityWarehouse + ' ' + product.unitMeasurement.getName()}">Quantity</td>
-                        <td th:text="${product.getCost()}">cost</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+
+
         </main>
     </div>
 </div>
+
 </body>
 </html>

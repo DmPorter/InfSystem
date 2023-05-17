@@ -65,6 +65,19 @@ public class Product {
         this.cost = cost;
     }
 
+    public Product(long idProduct, @NonNull String name, double quantityWarehouse, TypeProduct typeProduct,
+                   UnitMeasurement unitMeasurement, Provider provider, double cost) {
+        this.idProduct = idProduct;
+        this.name = name;
+        this.quantityWarehouse = quantityWarehouse;
+        this.typeProduct = typeProduct;
+        this.unitMeasurement = unitMeasurement;
+        this.provider = provider;
+        this.cost = cost;
+    }
+
+
+
     public double getCost() {
         return cost;
     }

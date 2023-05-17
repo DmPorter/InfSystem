@@ -21,56 +21,80 @@
 </head>
 <body>
 
-<div class="container">
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/warehouse/all">Выход на главную</a>
+</header>
+<div class="container-fluid">
+    <div class="row">
 
-    <form th:method="POST" th:action="@{/recipe/new}">
-        <div class="row justify-content-center align-items-center">
-            <div class="col-lg-6 col-md-6 col-12">
-                <div class="form-group form">
-                    <select class="mul-select" multiple="true">
-                        <option name="1" value="Stack">Stack</option>
-                        <option name="2" value="Queue">Queue</option>
-                        <option name="3" value="Linked-List">Linked-List</option>
-                        <option name="4" value="Heap">Heap</option>
-                        <option name="5" value="Binary-Tree">Binary-Tree</option>
-                        <option name="6" value="Graph">Graph</option>
-                        <option name="7" value="Array">Array</option>
-                    </select>
+        <div th:insert="~{navAdmin :: navAdmin}"></div>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="chartjs-size-monitor">
+                <div class="chartjs-size-monitor-expand">
+                    <div class=""></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink">
+                    <div class=""></div>
                 </div>
             </div>
-        </div>
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Сохранить продукт</button>
-    </form>
 
-    <table id="tab" class="table table-bordered">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Ингредиент</th>
-            <th scope="col">Количество</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row" th:text="${i}">1</th>
-            <td>
-                <label for="select-state"></label>
-                <select id="select-state" class="form-select form-select-sm" placeholder="Pick a state...">
-                    <option value="">Select a state...</option>
-                    <option th:each="product : ${products} "
-                            th:value="${product.idProduct}"
-                            th:text="${product.name}"></option>
-                </select></td>
-            <td>Otto</td>
-        </tr>
+            <div class="container">
 
-        </tbody>
-    </table>
+                <form th:method="POST" th:action="@{/recipe/new}">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-6 col-md-6 col-12">
+                            <div class="form-group form">
+                                <select class="mul-select" multiple="true">
+                                    <option name="1" value="Stack">Stack</option>
+                                    <option name="2" value="Queue">Queue</option>
+                                    <option name="3" value="Linked-List">Linked-List</option>
+                                    <option name="4" value="Heap">Heap</option>
+                                    <option name="5" value="Binary-Tree">Binary-Tree</option>
+                                    <option name="6" value="Graph">Graph</option>
+                                    <option name="7" value="Array">Array</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Сохранить продукт</button>
+                </form>
 
-    <input type='button' value='Ещё' onClick='add();'>
+                <table id="tab" class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Ингредиент</th>
+                        <th scope="col">Количество</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row" th:text="${i}">1</th>
+                        <td>
+                            <label for="select-state"></label>
+                            <select id="select-state" class="form-select form-select-sm" placeholder="Pick a state...">
+                                <option value="">Select a state...</option>
+                                <option th:each="product : ${products} "
+                                        th:value="${product.idProduct}"
+                                        th:text="${product.name}"></option>
+                            </select></td>
+                        <td>Otto</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+                <input type='button' value='Ещё' onClick='add();'>
 
 
+            </div>
+
+
+        </main>
+    </div>
 </div>
+
+
 
 
 <script>

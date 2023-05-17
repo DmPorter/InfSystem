@@ -1,9 +1,11 @@
 package com.example.infsystem.services;
 
+import com.example.infsystem.models.Provider;
 import com.example.infsystem.models.TypeProduct;
 import com.example.infsystem.models.UnitMeasurement;
 import com.example.infsystem.repositories.ProductRepository;
 import com.example.infsystem.models.Product;
+import com.example.infsystem.repositories.ProviderRepository;
 import com.example.infsystem.repositories.TypeProductRepository;
 import com.example.infsystem.repositories.UnitMeasureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +19,15 @@ public class WarehouseService {
     private final ProductRepository productRepository;
     private final UnitMeasureRepository unitMeasureRepository;
     private final TypeProductRepository typeProductRepository;
+    private final ProviderRepository providerRepository;
 
 
     @Autowired
-    public WarehouseService(ProductRepository productRepository, UnitMeasureRepository unitMeasureRepository, TypeProductRepository typeProductRepository) {
+    public WarehouseService(ProductRepository productRepository, UnitMeasureRepository unitMeasureRepository, TypeProductRepository typeProductRepository, ProviderRepository providerRepository) {
         this.productRepository = productRepository;
         this.unitMeasureRepository = unitMeasureRepository;
         this.typeProductRepository = typeProductRepository;
+        this.providerRepository = providerRepository;
     }
 
     public void updateProduct(Product product){
@@ -40,6 +44,14 @@ public class WarehouseService {
     public Product findProductById(long id){
         Optional<Product> product = productRepository.findById(id);
         return product.orElse(null);
+    }
+
+    public List<Provider> getAllProviders(){
+        return providerRepository.findAll();
+    }
+
+    public Provider getProviderById(long id){
+        return providerRepository.findById(id).orElse(null);
     }
 
     public void deleteProductById(long id){

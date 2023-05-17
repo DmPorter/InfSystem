@@ -27,6 +27,7 @@ public class WareHouseController {
         model.addAttribute("product", new Product(0, "", 0, new TypeProduct(), new UnitMeasurement(), 0));
         model.addAttribute("typeProducts", warehouseService.getAllTypeProduct());
         model.addAttribute("typeMeasures", warehouseService.getAllUnitMeasure());
+        model.addAttribute("providers", warehouseService.getAllProviders());
         return "warehouse/newProduct";
     }
 
@@ -34,7 +35,12 @@ public class WareHouseController {
     public String newProduct(@ModelAttribute("product") Product product) {
         TypeProduct typeProduct = warehouseService.getTypeProductById(product.getTypeProduct().getIdTypeProduct());
         UnitMeasurement unitMeasurement = warehouseService.getUnitMeasureById(product.getUnitMeasurement().getIdUnit());
-        Product product1 = new Product(0, product.getName(), 0, typeProduct, unitMeasurement, product.getCost());
+
+        Product product1 = new Product(0, product.getName(), 0,
+                typeProduct, unitMeasurement,
+                warehouseService.getProviderById(product.getProvider().getId()),
+                product.getCost());
+
         warehouseService.addNewProduct(product1);
         return "redirect:/warehouse/all";
     }

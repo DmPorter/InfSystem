@@ -20,6 +20,7 @@ public class ProductController {
     public String aboutProduct(@PathVariable String id, Model model) {
         Product product = warehouseService.findProductById(Long.parseLong(id));
         model.addAttribute("product", product);
+
         return "product/product";
     }
 

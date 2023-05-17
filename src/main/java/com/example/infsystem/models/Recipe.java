@@ -32,7 +32,7 @@ public class Recipe implements Comparable<Recipe>{
     @JoinColumn(name = "type_recipe_id_type")
     private TypeRecipe typeRecipe;
 
-    @OneToMany(fetch=FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_recipe")
     private List<Ingredient> ingredients;
 
@@ -116,5 +116,16 @@ public class Recipe implements Comparable<Recipe>{
     @Override
     public int compareTo(Recipe o) {
         return Long.compare(this.idRecipe , o.getIdRecipe());
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "idRecipe=" + idRecipe +
+                ", name='" + name + '\'' +
+                ", cost=" + cost +
+                ", typeRecipe=" + typeRecipe +
+                ", ingredients=" + ingredients +
+                '}';
     }
 }

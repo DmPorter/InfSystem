@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Информация о продукте</title>
@@ -48,8 +49,8 @@
             <p th:text="${product.getProvider().getName()}"></p>
         </div>
     </div>
-    <button type="button" class="btn btn-light btn-lg"><a class="link-light" th:href="@{/product/{id}/update(id=${product.idProduct})}">Изменить</a></button>
-    <button type="button" class="btn btn-light btn-lg"><a class="link-light" th:href="@{/product/{id}/delete(id=${product.idProduct})}">Удалить</a></button>
+    <button sec:authorize="hasRole('ROLE_ADMIN')" type="button" class="btn btn-light btn-lg"><a class="link-light" th:href="@{/product/{id}/update(id=${product.idProduct})}">Изменить</a></button>
+    <button sec:authorize="hasRole('ROLE_ADMIN')" type="button" class="btn btn-light btn-lg"><a class="link-light" th:href="@{/product/{id}/delete(id=${product.idProduct})}">Удалить</a></button>
 </div>
 
 </body>

@@ -54,6 +54,18 @@
                 </select>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="stateThree">Выберите поставщика</label>
+                <select th:field="*{provider.id}" id="stateThree" class="custom-select d-block w-100" aria-label="Default select example">
+                    <option th:each="provider : ${providers}"
+                            th:value="${provider.id}"
+                            th:text="${provider.name}"></option>
+                </select>
+            </div>
+
+        </div>
         <button class="btn btn-primary btn-lg btn-block" type="submit">Сохранить продукт</button>
     </form>
 

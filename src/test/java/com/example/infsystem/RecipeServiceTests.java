@@ -48,4 +48,9 @@ public class RecipeServiceTests {
         }
         return quantities.stream().min(Integer::compare).get();
     }
+
+    @Test
+    public void test2(){
+        System.out.println(recipeService.getAllRecipe().size());
+    }
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Продукты</title>
+    <title>Новый поставщик</title>
 
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 
@@ -114,7 +114,6 @@
             box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
         }
     </style>
-
     <style type="text/css">/* Chart.js */
     @keyframes chartjs-render-animation {
         from {
@@ -160,12 +159,13 @@
 </head>
 <body>
 
+
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/warehouse/all">Выход на главную</a>
 </header>
-
 <div class="container-fluid">
     <div class="row">
+
         <div th:insert="~{navAdmin :: navAdmin}"></div>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="chartjs-size-monitor">
@@ -177,34 +177,24 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Все продукты</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group me-2">
-                        <a href="/warehouse/new-product" class="btn btn-sm btn-dark" tabindex="-1" role="button" aria-disabled="true">Новый продукт</a>
+            <div class="container">
+                <form th:method="POST" th:action="@{/admin/provider/new}" th:object="${provider}">
+                    <div class="mb-3">
+                        <label for="name">Введите название поставщика</label>
+                        <input th:field="*{name}" type="text" id="name" class="form-control"
+                               placeholder="Название поставщика" required>
                     </div>
-                </div>
+
+                    <div class="mb-3">
+                        <label for="cost">Введите адрес поставщика</label>
+                        <input th:field="*{address}" type="text" id="cost" class="form-control"
+                               placeholder="Адрес поставщика" required min="0.0">
+                    </div>
+
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Создать</button>
+                </form>
             </div>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead class="table-dark">
-                    <tr>
-                        <th scope="col">Артикул</th>
-                        <th scope="col">Название</th>
-                        <th scope="col">Количество</th>
-                        <th scope="col">Себестоимость</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="product : ${list}">
-                        <th scope="row" th:text="${product.idProduct}">ID</th>
-                        <td> <a class="link-secondary" th:href="@{/product/{id}(id=${product.idProduct})}" th:text="${product.name}" ></a></td>
-                        <td th:text="${product.quantityWarehouse + ' ' + product.unitMeasurement.getName()}">Quantity</td>
-                        <td th:text="${product.getCost()}">cost</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+
         </main>
     </div>
 </div>

@@ -1,18 +1,17 @@
 package com.example.infsystem.services;
 
+import com.example.infsystem.forms.OrderPositionWithComment;
 import com.example.infsystem.helper.OrdersList;
 import com.example.infsystem.helper.QuantityRecipesInWarehouse;
+import com.example.infsystem.models.AdditiveOrderPosition;
 import com.example.infsystem.models.Order;
 import com.example.infsystem.models.OrderPosition;
 import com.example.infsystem.models.Product;
-import com.example.infsystem.repositories.OrderPositionRepository;
-import com.example.infsystem.repositories.OrderRepository;
-import com.example.infsystem.repositories.ProductRepository;
+import com.example.infsystem.repositories.*;
+import com.example.infsystem.security.PersonDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,11 +25,20 @@ public class OrderService {
     private final ProductRepository productRepository;
     private final OrderPositionRepository orderPositionRepository;
 
+    private final AdditiveOrderPositionRepository additiveOrderPositionRepository;
+
+    private final PersonRepository personRepository;
+
     @Autowired
-    public OrderService(OrderRepository orderRepository, ProductRepository productRepository, OrderPositionRepository orderPositionRepository) {
+    public OrderService(OrderRepository orderRepository, ProductRepository productRepository,
+                        OrderPositionRepository orderPositionRepository,
+                        AdditiveOrderPositionRepository additiveOrderPositionRepository,
+                        PersonRepository personRepository) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.orderPositionRepository = orderPositionRepository;
+        this.additiveOrderPositionRepository = additiveOrderPositionRepository;
+        this.personRepository = personRepository;
     }
 
 
@@ -38,22 +46,37 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public void addNewOrderPositions(List<OrderPosition> list){
-        orderPositionRepository.saveAll(list);
+    public List<OrderPosition> addNewOrderPositions(List<OrderPosition> list){
+        return orderPositionRepository.saveAllAndFlush(list);
     }
 
 
-    public void createNewOrder(){
+    public void createNewOrder(PersonDetails personDetails){
         Order order = new Order(Timestamp.valueOf(LocalDateTime.now()));
+        order.setPerson(personRepository.findByUsername(personDetails.getUsername()).get());
         addNewOrder(order);
 
-        for(var val: OrdersList.list){
+        List<OrderPositionWithComment> list = OrdersList.orderListMap.get(personDetails);
+//        ArrayList<AdditiveOrderPosition> additiveOrderPositions = new ArrayList<>();
+
+        for(var value: list){
+            var val = value.getOrderPosition();
             val.setOrder(order);
+
+            List<AdditiveOrderPosition> additiveOrderPositions = val.getList();
+            val.setList(new ArrayList<>());
+            OrderPosition orderPosition = orderPositionRepository.saveAndFlush(val);
+
+            for(AdditiveOrderPosition additiveOrderPosition: additiveOrderPositions){
+                additiveOrderPosition.setOrderPosition(orderPosition);
+            }
+
+            additiveOrderPositionRepository.saveAllAndFlush(additiveOrderPositions);
         }
 
-        addNewOrderPositions(OrdersList.list);
+//        addNewOrderPositions(list);
 
-        Map<Product, Double> map =  QuantityRecipesInWarehouse.sumQuantityInOrderByProducts(OrdersList.list);
+        Map<Product, Double> map =  QuantityRecipesInWarehouse.sumQuantityInOrderByProducts(list);
 
         List<Product> products = productRepository.findAll();
 
@@ -64,7 +87,8 @@ public class OrderService {
         }
 
         productRepository.saveAll(products);
-        OrdersList.list = new ArrayList<>();
+        OrdersList.orderListMap.remove(personDetails);
+
     }
 
     public List<Order> getTodayOrders(){
